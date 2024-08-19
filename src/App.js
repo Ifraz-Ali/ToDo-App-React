@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import UITodo from './components/UITodo';
 import SignUp from './components/SignUp';
@@ -23,7 +22,7 @@ const routes = createBrowserRouter(
 );
 function App() {
     return (
-        <div className="App">
+        <div className="App bg-zinc-800">
 
             {/* <SignUp /> */}
             {/* <SignIn /> */}

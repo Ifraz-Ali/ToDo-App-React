@@ -1,0 +1,64 @@
+/* input[type=checkbox] {
+        position: relative;
+        visibility: hidden;
+        cursor: pointer;
+
+    }
+    
+    input[type=checkbox]:after {
+        display: block;
+        content: 'OFF';
+        position: absolute;
+        top: 0;
+        right: -20px;
+        visibility: visible;
+        height: 30px;
+        line-height: 30px;
+        width: 30px;
+        text-align: center;
+        background: #000;
+        color: #fff;
+        font-weight: 600;
+        cursor: pointer;
+        border-radius: 50%;
+    }
+    
+    input[type=checkbox]:checked:after {
+        content: "ON";
+        transition: background-color 0.5s linear;
+        background: #0a0;
+    } */
+
+
+
+    
+/* 
+.line-through-animation {
+    position: relative;
+    color: transparent;
+}
+
+.line-through-animation::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 0;
+    height: 2px;
+    background-color: black;
+    transform: translateY(-50%);
+    transition: width 0.9s ease-in-out;
+}
+
+.line-through-animation.line-through::after {
+    width: 100%;
+}
+
+.line-through-animation {
+    color: black;
+
+}
+
+.line-through-animation.line-through::after {
+    width: 100%;
+} */

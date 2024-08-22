@@ -1,28 +1,49 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './Todo.css'
 
-const TodoList = ({ val, deleteTodo, editTodo, handleComplete }) => {
+const TodoList = ({ index, val, deleteTodo, editTodo, handleComplete, duration }) => {
+    const [complete, setComplete] = useState(val.isComplete);
 
-    const handle = (e) => {
-        console.log(e.target.checked, val.isComplete);
-        handleComplete(e.target.checked);
+    console.log("duratoin : ", duration, val.text)
+    const [second, setSecond] = useState(Math.floor(((duration || 0) / 1000) % 60));
+    const [minute, setMinute] = useState(Math.floor(((duration || 0) / 1000 / 60) % 60));
+    const [hour, setHour] = useState(Math.floor(((duration || 0) / 1000 / 60 / 60) % 24));
+
+
+    const handleChnage = (e) => {
+        setComplete(e.target.checked);
+        // console.log("value == >", e.target.checked, index)
+        console.log(duration);
+        handleComplete(index, e.target.checked, new Date().getTime());
     }
 
+
     return (
-        <div className=' flex justify-around items-center bg-white text-gray-900 w-1/2 m-auto rounded-full mt-3 '>
-            <div className=''>
-                <input type='checkbox'
-                    className='w-5 h-5 rounded-full accent-green-500 cursor-pointer' onChange={handle} checked={val.isComplete} />
+        <div className=' flex justify-around items-center bg-white text-gray-900 w-1/2 m-auto rounded-full mt-3'>
+            <div className='flex flex-col items-center justify-center '>
+                {complete ? <input type='checkbox'
+                    className='w-5 h-5 rounded-full accent-green-500 cursor-pointer' onChange={handleChnage}
+                    checked={complete} disabled />
+                    :
+                    <input type='checkbox'
+                        className='w-5 h-5 rounded-full accent-green-500 cursor-pointer' onChange={handleChnage}
+                checked={complete} />
+                }
+                {complete ? <div className=''>
+                    <span className='text-red-500'>completed:</span>
+                    <span className=' '>{hour < 10 ? `0${hour}` : hour}:{minute < 10 ? `0${minute}` : `${minute}`}:{second < 10 ? `0${second}` : second}</span>
+                </div>
+                    : <span>Not Completed</span>
+                }
             </div>
             <div className=' w-1/2 '>
                 <p className='flex justify-between items-center flex-col '>
-
-                    {!val.isComplete ?
-                        <span className='font-semibold text-lg'>
+                    {complete ?
+                        <span className={'font-semibold text-lg line-through decoration-2 text-gray-400'}>
                             {val.text}
                         </span>
-                        : <span className={'font-semibold text-lg line-through decoration-2'}
-                        >
+                        :
+                        <span className='font-semibold text-lg'>
                             {val.text}
                         </span>
                     }
@@ -30,10 +51,16 @@ const TodoList = ({ val, deleteTodo, editTodo, handleComplete }) => {
                 </p>
             </div>
             <div className='w-1/5 flex justify-center '>
-                <button className='bg-blue-500 rounded-xl w-1/2 h-7 text-md font-medium text-white mr-1'
-                    onClick={editTodo}>
+                {complete ? <button className='bg-blue-500 rounded-xl w-1/2 h-7 text-md font-medium text-white mr-1 disabled:bg-blue-300'
+                    onClick={editTodo} disabled>
                     Edit
                 </button>
+                    :
+                    <button className='bg-blue-500 rounded-xl w-1/2 h-7 text-md font-medium text-white mr-1'
+                        onClick={editTodo}>
+                        Edit
+                    </button>
+                }
                 <button className='bg-blue-500 rounded-xl w-1/2 h-7 text-md font-medium text-white'
                     onClick={deleteTodo}>
                     Delete

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import TodoList from './TodoList';
 import Header from './header';
+import './Todo.css';
 
 
 const UITodo = () => {
@@ -9,13 +10,13 @@ const UITodo = () => {
     const [edit, setEdit] = useState(undefined);
     const [isEdit, setIsEdit] = useState(false);
     const [index, setIndex] = useState(undefined);
-    const [complete, setComplete] = useState(false);
+    const [start, setstart] = useState(0);
 
     const loginUser = window.localStorage.getItem('loginKey');
     const users = JSON.parse(localStorage.getItem("userid"));
 
     const userInfo = users.find((user) => user.id === loginUser);
-    
+
     const { id, userName } = userInfo;
 
     const getTodos = window.localStorage.getItem('userTodo');
@@ -26,12 +27,12 @@ const UITodo = () => {
         setTodos(filteredData?.todo ?? []);
     }, []);
     const addTodo = () => {
+        setstart(new Date().getTime());
         const newTodo = {
             text: task,
             addTime: new Date(),
-            isComplete: complete
+            isComplete: false
         };
-
         const allUserData = [{
             userid: id,
             todo: [...todos, newTodo]
@@ -39,7 +40,10 @@ const UITodo = () => {
         setTodos([...todos, newTodo]);
         window.localStorage.setItem('userTodo', JSON.stringify(allUserData));
         setTask('');
+        console.log("start > ", start);
+
     }
+
     const deleteTodo = (index) => {
         const get = allTodo.indexOf(filteredData);
         console.log(todos);
@@ -65,7 +69,7 @@ const UITodo = () => {
         const editedTodo = {
             text: edit,
             editTime: new Date(),
-            isComplete: complete
+            isComplete: false
         };
         updatedTodos[index] = editedTodo;
         const allTodoCopy = [...allTodo];
@@ -76,6 +80,7 @@ const UITodo = () => {
         setTodos(updatedTodos);
         localStorage.setItem("userTodo", JSON.stringify(allTodoCopy))
         setIsEdit(false);
+        setEdit("");
     }
     const deleteAllTodo = () => {
         const userIdIndex = allTodo.indexOf(filteredData);
@@ -87,28 +92,31 @@ const UITodo = () => {
         setTodos([]);
         localStorage.setItem('userTodo', JSON.stringify(allTodoCopy));
     }
-    const handleComplete = (index) => {
-        console.log(complete, "in main")
+    const handleComplete = (index, completed, finish) => {
+        // console.log(finish, start);
+        console.log("finish > ", finish);
         const get = allTodo.indexOf(filteredData);
         const updateTodo = todos;
-        setComplete(!complete)
         const editTodo = {
             ...updateTodo[index],
-            isComplete: complete
+            isComplete: completed,
+            duration: finish - start
         }
-        console.log(editTodo);
         updateTodo[index] = editTodo;
         const allTodoCopy = [...allTodo];
         allTodoCopy[get] = {
             userid: id,
             todo: updateTodo,
         };
+        console.log("updated :", updateTodo)
         setTodos(updateTodo);
         localStorage.setItem("userTodo", JSON.stringify(allTodoCopy));
     }
     const handleLogOut = () => {
         window.localStorage.removeItem('loginKey');
+        window.location.href = "login";
     }
+    console.log("tod :", todos)
     return (
         <div className='h-screen bg-zinc-800 text-white relative'>
             <Header
@@ -152,14 +160,17 @@ const UITodo = () => {
                             </button>
                         </div>
                     </div>}
-                {filteredData?.todo.map((val, i) => {
+                {todos.map((val, i) => {
+                    console.log("val == >", val, val.duration)
                     return (
-                        <div>
+                        <div key={`${val.text} + ${i} + ${val.duration}`}>
                             <TodoList
+                                index={i}
                                 val={val}
+                                duration={val.duration}
                                 deleteTodo={() => deleteTodo(i)}
                                 editTodo={() => editTodo(i)}
-                                handleComplete={() => handleComplete(i)}
+                                handleComplete={handleComplete}
                                 isEdit={isEdit}
                             />
                         </div>

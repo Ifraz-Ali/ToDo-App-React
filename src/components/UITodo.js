@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react'
 import TodoList from './TodoList';
 import Header from './header';
@@ -23,24 +24,37 @@ const UITodo = () => {
     const allTodo = JSON.parse(getTodos);
 
     const filteredData = allTodo?.filter((usertodo) => usertodo.userid === id)[0];
+
     useEffect(() => {
         setTodos(filteredData?.todo ?? []);
     }, []);
+
+    useEffect(() => {
+        setFilterTodo(todos);
+    }, [todos]);
+
+    const [filterTodo, setFilterTodo] = useState(filteredData?.todo);
+
     const addTodo = () => {
-        setstart(new Date().getTime());
-        const newTodo = {
-            text: task,
-            addTime: new Date(),
-            isComplete: false
-        };
-        const allUserData = [{
-            userid: id,
-            todo: [...todos, newTodo]
-        }];
-        setTodos([...todos, newTodo]);
-        window.localStorage.setItem('userTodo', JSON.stringify(allUserData));
-        setTask('');
-        console.log("start > ", start);
+        if (task === "" || task === null) {
+            console.log("empty");
+        }
+        else {
+            setstart(new Date().getTime());
+            const newTodo = {
+                text: task,
+                addTime: new Date(),
+                isComplete: false
+            };
+            const allUserData = [{
+                userid: id,
+                todo: [...todos, newTodo]
+            }];
+            setTodos([...todos, newTodo]);
+            window.localStorage.setItem('userTodo', JSON.stringify(allUserData));
+            setTask('');
+            console.log("start > ", start);
+        }
 
     }
 
@@ -93,10 +107,9 @@ const UITodo = () => {
         localStorage.setItem('userTodo', JSON.stringify(allTodoCopy));
     }
     const handleComplete = (index, completed, finish) => {
-        // console.log(finish, start);
         console.log("finish > ", finish);
         const get = allTodo.indexOf(filteredData);
-        const updateTodo = todos;
+        const updateTodo = [...todos];
         const editTodo = {
             ...updateTodo[index],
             isComplete: completed,
@@ -112,20 +125,37 @@ const UITodo = () => {
         setTodos(updateTodo);
         localStorage.setItem("userTodo", JSON.stringify(allTodoCopy));
     }
+    const getAll = () => {
+        console.log('all');
+        const noFilter = [...todos];
+        setFilterTodo(noFilter);
+    }
+    const getPending = () => {
+        console.log('pending');
+        const filterPending = todos.filter((val) => !val.isComplete);
+        console.log(filterPending);
+        setFilterTodo(filterPending);
+    }
+    const getCompleted = () => {
+        console.log('completed');
+        const filterComplete = todos.filter((val) => val.isComplete);
+        console.log(filterComplete);
+        setFilterTodo(filterComplete);
+
+    }
     const handleLogOut = () => {
         window.localStorage.removeItem('loginKey');
         window.location.href = "login";
     }
-    console.log("tod :", todos)
     return (
-        <div className='h-screen bg-zinc-800 text-white relative'>
+        <div className='h-screen bg-zinc-800 text-white '>
             <Header
                 userName={userName}
                 logoutUser={handleLogOut}
             />
             <div>
                 {!isEdit ?
-                    <div className='flex justify-center items-end  '>
+                    <div className='flex justify-center items-end '>
                         <div className='pt-2 h-20 w-1/2 flex items-end flex-col justify-center  '>
                             <label htmlFor='todo' className='block text-lg w-1/3 flex '>
                                 Enter Tasks
@@ -144,7 +174,8 @@ const UITodo = () => {
                                 Delete All
                             </button>
                         </div>
-                    </div> :
+                    </div>
+                    :
                     <div className='flex justify-center items-end h-20'>
                         <div className='pt-2 h-20 w-1/2 flex items-end flex-col justify-center'>
                             <label htmlFor='todo' className='block text-lg w-1/3 flex'>
@@ -160,20 +191,34 @@ const UITodo = () => {
                             </button>
                         </div>
                     </div>}
-                {todos.map((val, i) => {
-                    console.log("val == >", val, val.duration)
+                <div className=' w-3/4 h-12 flex justify-center items-center gap-4'>
+                    <button className='w-1/12 bg-blue-500 rounded text-md font-medium p-1'
+                        onClick={() => getAll()}>
+                        All
+                    </button>
+                    <button className=' bg-blue-500 rounded text-md font-medium p-1'
+                        onClick={() => getPending()}>
+                        Pending
+                    </button>
+                    <button className=' bg-blue-500 rounded text-md font-medium p-1'
+                        onClick={() => getCompleted()}>
+                        Completed
+                    </button>
+                </div>
+                {filterTodo.map((val, i) => {
+                    console.log("val == >", val);
+                    console.log(val.isComplete)
                     return (
-                        <div key={`${val.text} + ${i} + ${val.duration}`}>
-                            <TodoList
-                                index={i}
-                                val={val}
-                                duration={val.duration}
-                                deleteTodo={() => deleteTodo(i)}
-                                editTodo={() => editTodo(i)}
-                                handleComplete={handleComplete}
-                                isEdit={isEdit}
-                            />
-                        </div>
+                        <TodoList
+                            key={`${val.text} + ${i} + ${val.duration}  ${val.addTime}`}
+                            index={i}
+                            val={val}
+                            duration={val.duration}
+                            deleteTodo={() => deleteTodo(i)}
+                            editTodo={() => editTodo(i)}
+                            handleComplete={handleComplete}
+                            isEdit={isEdit}
+                        />
                     )
                 }) || 'Add some tasks'}
             </div>

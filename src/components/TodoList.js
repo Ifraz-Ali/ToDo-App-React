@@ -4,16 +4,12 @@ import './Todo.css'
 const TodoList = ({ index, val, deleteTodo, editTodo, handleComplete, duration }) => {
     const [complete, setComplete] = useState(val.isComplete);
 
-    console.log("duratoin : ", duration, val.text)
     const [second, setSecond] = useState(Math.floor(((duration || 0) / 1000) % 60));
     const [minute, setMinute] = useState(Math.floor(((duration || 0) / 1000 / 60) % 60));
     const [hour, setHour] = useState(Math.floor(((duration || 0) / 1000 / 60 / 60) % 24));
 
-
     const handleChnage = (e) => {
         setComplete(e.target.checked);
-        // console.log("value == >", e.target.checked, index)
-        console.log(duration);
         handleComplete(index, e.target.checked, new Date().getTime());
     }
 
@@ -27,7 +23,7 @@ const TodoList = ({ index, val, deleteTodo, editTodo, handleComplete, duration }
                     :
                     <input type='checkbox'
                         className='w-5 h-5 rounded-full accent-green-500 cursor-pointer' onChange={handleChnage}
-                checked={complete} />
+                        checked={complete} />
                 }
                 {complete ? <div className=''>
                     <span className='text-red-500'>completed:</span>
@@ -51,17 +47,17 @@ const TodoList = ({ index, val, deleteTodo, editTodo, handleComplete, duration }
                 </p>
             </div>
             <div className='w-1/5 flex justify-center '>
-                {complete ? <button className='bg-blue-500 rounded-xl w-1/2 h-7 text-md font-medium text-white mr-1 disabled:bg-blue-300'
+                {complete ? <button className='bg-blue-500 rounded-2xl w-1/2 h-8 text-md font-medium text-white mr-1 disabled:bg-blue-300'
                     onClick={editTodo} disabled>
                     Edit
                 </button>
                     :
-                    <button className='bg-blue-500 rounded-xl w-1/2 h-7 text-md font-medium text-white mr-1'
+                    <button className='bg-blue-500 rounded-2xl w-1/2 h-8 text-md font-medium text-white mr-1'
                         onClick={editTodo}>
                         Edit
                     </button>
                 }
-                <button className='bg-blue-500 rounded-xl w-1/2 h-7 text-md font-medium text-white'
+                <button className='bg-blue-500 rounded-2xl w-1/2 h-8 text-md font-medium text-white'
                     onClick={deleteTodo}>
                     Delete
                 </button>

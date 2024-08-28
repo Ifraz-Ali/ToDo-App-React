@@ -2,7 +2,7 @@ import './App.css';
 import UITodo from './components/UITodo';
 import SignUp from './components/SignUp';
 import SignIn from './components/SignIn';
-import { createBrowserRouter, Route, RouterProvider, Routes } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 const routes = createBrowserRouter(
     [

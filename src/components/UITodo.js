@@ -53,7 +53,6 @@ const UITodo = () => {
             setTodos([...todos, newTodo]);
             window.localStorage.setItem('userTodo', JSON.stringify(allUserData));
             setTask('');
-            console.log("start > ", start);
         }
 
     }
@@ -92,9 +91,9 @@ const UITodo = () => {
             todo: updatedTodos,
         };
         setTodos(updatedTodos);
-        localStorage.setItem("userTodo", JSON.stringify(allTodoCopy))
+        localStorage.setItem("userTodo", JSON.stringify(allTodoCopy));
         setIsEdit(false);
-        setEdit("");
+        setEdit('');
     }
     const deleteAllTodo = () => {
         const userIdIndex = allTodo.indexOf(filteredData);
@@ -156,51 +155,51 @@ const UITodo = () => {
             <div>
                 {!isEdit ?
                     <div className='flex justify-center items-end '>
-                        <div className='pt-2 h-20 w-1/2 flex items-end flex-col justify-center  '>
-                            <label htmlFor='todo' className='block text-lg w-1/3 flex '>
+                        <div className='pt-2 h-20 w-1/2 flex items-end flex-col justify-center max-[640px]:w-3/4 max-[640px]:p-1 max-[640px]:items-center'>
+                            <label htmlFor='todo' className='block text-xl w-1/3 max-[640px]:w-1/2'>
                                 Enter Tasks
                             </label>
                             <input type='text' id='todo' name='todo' onChange={(e) => setTask(e.target.value)} value={task}
-                                className='rounded w-80 h-8 border-0 text-gray-950 px-2 text-sm font-medium '
+                                className='rounded w-80 h-8 border-0 text-gray-950 px-2 text-sm font-medium max-[640px]:w-11/12'
                                 placeholder='Tasks' />
                         </div>
-                        <div className='flex justify-evenly items-center w-1/4 h-12 pt-1  '>
-                            <button className='bg-blue-500 rounded w-2/5 h-8 text-lg font-medium'
+                        <div className='flex justify-evenly items-center w-1/4 h-12 pt-1 max-[640px]:flex-col max-[640px]:h-max max-[640px]:p-1 max-[640px]:w-1/4 gap-1'>
+                            <button className='bg-blue-500 rounded w-5/12 h-8 text-lg font-medium max-[640px]:w-full max-[640px]:text-base max-[640px]:font-normal hover:bg-blue-600'
                                 onClick={() => addTodo()}>
                                 Add
                             </button>
-                            <button className='bg-blue-500 rounded w-2/5 h-8 text-lg font-medium '
+                            <button className='bg-blue-500 rounded w-1/2 h-8 text-lg font-medium max-[640px]:w-full max-[640px]:text-base max-[640px]:font-normal hover:bg-blue-600'
                                 onClick={() => deleteAllTodo()}>
                                 Delete All
                             </button>
                         </div>
                     </div>
                     :
-                    <div className='flex justify-center items-end h-20'>
-                        <div className='pt-2 h-20 w-1/2 flex items-end flex-col justify-center'>
-                            <label htmlFor='todo' className='block text-lg w-1/3 flex'>
+                    <div className='flex justify-center items-end h-20 '>
+                        <div className='pt-2 h-20 w-1/2 flex items-end flex-col justify-center max-[640px]:w-3/4 max-[640px]:p-1 max-[640px]:items-center'>
+                            <label htmlFor='todo' className='block text-lg w-1/3 max-[640px]:w-1/2'>
                                 Enter Tasks
                             </label>
                             <input type='text' id='editTodo' name='editTodo' onChange={(e) => setEdit(e.target.value)} value={edit}
-                                className='rounded w-80 h-8 border-0 text-gray-950 px-2 text-sm font-medium' />
+                                className='rounded w-80 h-8 border-0 text-gray-950 px-2 text-sm font-medium max-[640px]:w-11/12' />
                         </div>
-                        <div className='flex justify-start items-center w-1/4 h-12 pt-1 pl-5'>
-                            <button className='bg-blue-500 rounded w-5/12 h-8 text-lg font-medium'
+                        <div className='flex justify-start items-center w-1/4 h-12 pt-1 pl-5 max-[640px]:h-full max-[640px]:items-end max-[640px]:w-1/4 max-[640px]:p-2'>
+                            <button className='bg-blue-500 rounded w-5/12 h-8 text-lg font-medium max-[640px]:w-full max-[640px]:text-base max-[640px]:font-normal hover:bg-blue-600'
                                 onClick={() => updateTodo()}>
                                 Save
                             </button>
                         </div>
                     </div>}
-                <div className=' w-3/4 h-12 flex justify-center items-center gap-4'>
-                    <button className='w-1/12 bg-blue-500 rounded text-md font-medium p-1'
+                <div className=' w-3/4 h-12 flex justify-center items-center gap-4 max-[640px]:w-full max-[640px]:bg-zinc-700'>
+                    <button className='w-1/12 bg-blue-500 rounded text-md font-medium p-1 max-[640px]:w-1/6 hover:bg-blue-700 focus:bg-blue-600'
                         onClick={() => getAll()}>
                         All
                     </button>
-                    <button className=' bg-blue-500 rounded text-md font-medium p-1'
+                    <button className=' bg-blue-500 rounded text-md font-medium p-1 max-[640px]:w-1/3 hover:bg-blue-600 focus:bg-blue-700'
                         onClick={() => getPending()}>
                         Pending
                     </button>
-                    <button className=' bg-blue-500 rounded text-md font-medium p-1'
+                    <button className=' bg-blue-500 rounded text-md font-medium p-1 max-[640px]:w-1/3 hover:bg-blue-600 focus:bg-blue-700'
                         onClick={() => getCompleted()}>
                         Completed
                     </button>

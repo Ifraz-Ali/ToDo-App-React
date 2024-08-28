@@ -71,7 +71,7 @@ const TodoList = ({ index, val, deleteTodo, editTodo, handleComplete, duration }
                 {complete ? (
                     <input
                         type='checkbox'
-                        className='w-5 h-5 rounded-full accent-green-500 cursor-pointer'
+                        className='w-5 h-5 rounded-full accent-green-500 cursor-pointer disabled:cursor-not-allowed'
                         onChange={handleChnage}
                         checked={complete}
                         disabled
@@ -112,7 +112,7 @@ const TodoList = ({ index, val, deleteTodo, editTodo, handleComplete, duration }
             <div className='w-full  sm:w-1/4 sm:gap-1 md:w-1/4 flex justify-center max-[640px]:flex-col max-[640px]:items-center max-[640px]:w-1/5 max-[640px]:pr-1 max-[640px]:gap-1'>
                 {complete ? (
                     <button
-                        className='bg-blue-500 rounded-2xl w-full md:w-1/2 h-8 text-md font-medium text-white disabled:bg-blue-300'
+                        className='bg-blue-500 rounded-2xl w-full md:w-1/2 h-8 text-md font-medium text-white disabled:bg-blue-300 disabled:cursor-not-allowed'
                         onClick={editTodo}
                         disabled
                     >
@@ -120,14 +120,14 @@ const TodoList = ({ index, val, deleteTodo, editTodo, handleComplete, duration }
                     </button>
                 ) : (
                     <button
-                        className='bg-blue-500 rounded-2xl w-full md:w-1/2 h-8 text-md font-medium text-white'
+                        className='bg-blue-500 rounded-2xl w-full md:w-1/2 h-8 text-md font-medium text-white hover:bg-blue-600'
                         onClick={editTodo}
                     >
                         Edit
                     </button>
                 )}
                 <button
-                    className='bg-blue-500 rounded-2xl w-full md:w-1/2 h-8 text-md font-medium text-white'
+                    className='bg-blue-500 rounded-2xl w-full md:w-1/2 h-8 text-md font-medium text-white hover:bg-blue-600'
                     onClick={deleteTodo}
                 >
                     Delete

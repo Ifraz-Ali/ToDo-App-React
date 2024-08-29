@@ -1,8 +1,11 @@
-import './App.css';
+import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom';
 import UITodo from './components/UITodo';
 import SignUp from './components/SignUp';
 import SignIn from './components/SignIn';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import './App.css';
+
+
+const isAuth = localStorage.getItem('loginKey');
 
 const routes = createBrowserRouter(
     [
@@ -16,17 +19,13 @@ const routes = createBrowserRouter(
         },
         {
             path: '/todo-list',
-            element: <UITodo />
+            element: isAuth ? <UITodo /> : <Navigate to={'/login'} />
         }
     ]
 );
 function App() {
     return (
         <div className="App bg-zinc-800">
-
-            {/* <SignUp /> */}
-            {/* <SignIn /> */}
-            {/* <UITodo /> */}
             <RouterProvider router={routes}></RouterProvider>
         </div>
 

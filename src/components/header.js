@@ -1,12 +1,14 @@
 import React from 'react'
 import { TbLogout } from "react-icons/tb";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Header = ({ userName, logoutUser }) => {
 
+    const navigate = useNavigate()
     const letter = userName.split('');
     const handleClick = () => {
-        window.location.href = 'todo-list'
+        navigate('/todo-list');
+        // window.location.href = 'todo-list'
     }
     return (
         <>

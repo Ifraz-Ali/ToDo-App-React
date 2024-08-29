@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import TodoList from './TodoList';
 import Header from './header';
 import './Todo.css';
+import { useNavigate } from 'react-router-dom';
 
 
 const UITodo = () => {
@@ -12,6 +13,8 @@ const UITodo = () => {
     const [isEdit, setIsEdit] = useState(false);
     const [index, setIndex] = useState(undefined);
     const [start, setstart] = useState(0);
+    
+    const navigate = useNavigate();
 
     const loginUser = window.localStorage.getItem('loginKey');
     const users = JSON.parse(localStorage.getItem("userid"));
@@ -144,7 +147,8 @@ const UITodo = () => {
     }
     const handleLogOut = () => {
         window.localStorage.removeItem('loginKey');
-        window.location.href = "login";
+        // window.location.href = "login";
+        navigate('/login');
     }
     return (
         <div className='h-screen bg-zinc-800 text-white '>

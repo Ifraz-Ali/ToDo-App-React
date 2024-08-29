@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const SignIn = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const navigate = useNavigate();
 
     const users = JSON.parse(localStorage.getItem("userid"));
     console.log(users)
@@ -18,7 +19,7 @@ const SignIn = () => {
                     console.log('login');
                     const tempKey = users[index].id;
                     window.localStorage.setItem('loginKey', tempKey);
-                    window.location.href = "todo-list";
+                    navigate('/todo-list');
                     return;
                 }
                 else {

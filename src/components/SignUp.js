@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState } from 'react'
-import { Link, Navigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 
 const SignUp = () => {
 
@@ -13,6 +13,8 @@ const SignUp = () => {
     const [password, setPassword] = useState('');
     const [gender, setGender] = useState('');
     const [users, setUsers] = useState([...getUsers]);
+    
+    const navigate = useNavigate();
 
     console.log('users=>', getUsers);
     const handleSignUp = () => {
@@ -36,7 +38,8 @@ const SignUp = () => {
             setUsers(users);
             // console.log(users);
             window.localStorage.setItem("userid", JSON.stringify(users));
-            window.location.href = "login";
+            navigate('/login');
+            // window.location.href = "login";
         }
     }
 

@@ -4,7 +4,7 @@ import { Link, Navigate } from 'react-router-dom';
 
 const SignUp = () => {
 
-    const getUsers = JSON.parse(localStorage.getItem('userid'));
+    const getUsers = JSON.parse(localStorage.getItem('userid')) || [];
 
     const { v4: uuidv4 } = require('uuid');
     const [userId, setUserId] = useState(uuidv4());
@@ -14,6 +14,7 @@ const SignUp = () => {
     const [gender, setGender] = useState('');
     const [users, setUsers] = useState([...getUsers]);
 
+    console.log('users=>', getUsers);
     const handleSignUp = () => {
         if (userName === '' || userName === null || email === '' || email === null || password === '' || password === null) {
             console.error('empty');
@@ -30,9 +31,10 @@ const SignUp = () => {
                 'password': password,
                 'gender': gender
             };
+            // const newUser = [...users, user];
             users.push(user);
             setUsers(users);
-            console.log(users);
+            // console.log(users);
             window.localStorage.setItem("userid", JSON.stringify(users));
             window.location.href = "login";
         }
@@ -64,8 +66,8 @@ const SignUp = () => {
                     </label>
                     <input type='email' id='email' name='email' value={email} onChange={(e) => setEmail(e.target.value)} required
                         className='rounded-md w-80 h-8 border-0 text-gray-950 px-2 text-sm font-medium'
-                        placeholder='Create Password'
-                        autocomplete="email" />
+                        placeholder='Email'
+                    />
                 </div>
                 <div className='my-5 h-20 space-y-2 flex justify-center items-center flex-col'>
                     <label htmlFor='password' className=' text-xl w-1/4 m-auto flex pl-2 max-[640px]:w-1/2 max-[640px]:text-lg'>

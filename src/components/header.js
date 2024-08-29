@@ -25,7 +25,7 @@ const Header = ({ userName, logoutUser }) => {
                         <TbLogout className='size-6 max-[640px]:hidden ' />
                     </div>
                     <div className='flex flex-col items-center '>
-                        <div className='bg-blue-500 size-10 rounded-full flex justify-center items-center '> {letter[0].toUpperCase()} </div>
+                        <div className='bg-blue-500 size-10 rounded-full flex justify-center items-center '> {`${letter[0].toUpperCase()} `} </div>
                         <h4 className='text-blue-500 text-xl max-[640px]:text-base'>{userName}</h4>
                     </div>
                 </div>

@@ -7,10 +7,10 @@ const SignIn = () => {
     const [error, setError] = useState('');
 
     const users = JSON.parse(localStorage.getItem("userid"));
-
+    console.log(users)
     const handleSignIn = () => {
         if (email === '' || email === null || password === '' || password === null) {
-            console.error('empty')
+            setError("Email and password can't be epmty");
         }
         else {
             for (let index in users) {
@@ -19,12 +19,14 @@ const SignIn = () => {
                     const tempKey = users[index].id;
                     window.localStorage.setItem('loginKey', tempKey);
                     window.location.href = "todo-list";
+                    return;
                 }
                 else {
                     console.log('invalid email or password');
                     setError('invalid email or password');
                 }
             }
+            setError("user doesn't exit");
         }
     }
     return (
@@ -40,7 +42,6 @@ const SignIn = () => {
                     <input type='email' id='email' name='email' value={email} onChange={(e) => setEmail(e.target.value)}
                         className='rounded-md w-80 h-8 border-0 text-gray-950 px-2 text-sm font-medium block focus:outline-none focus:border-blue-600 focus:ring-1  focus:ring-blue-600 invalid:border-red-600 border invalid:text-red-600 focus:invalid:border-red-600 focus:invalid:ring-red-600'
                         placeholder='Email Address'
-                        autocomplete="email"
                         required />
                 </div>
                 <div className='my-3  h-20 space-y-2 flex justify-center items-center flex-col'>

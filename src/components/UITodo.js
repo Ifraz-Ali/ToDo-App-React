@@ -204,7 +204,7 @@ const UITodo = () => {
                         Completed
                     </button>
                 </div>
-                {filterTodo.map((val, i) => {
+                {filterTodo?.map((val, i) => {
                     console.log("val == >", val);
                     console.log(val.isComplete)
                     return (
